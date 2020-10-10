@@ -8,12 +8,13 @@
 
 #include "JtPlaystatus.h"
 #include "JtJniCallbackJava.h"
+#include "JtQueue.h"
 #include "include/libavutil/frame.h"
 
 class JtVideo {
 
-public:
-    JtVideo(JtPlaystatus *playstatus, JtJniCallbackJava *wlCallJava);
+ public:
+    JtVideo(JtPlaystatus *playstatus, JtJniCallbackJava *jtCallJava, JtAudio* jtAudio);
     ~JtVideo();
 
     void play();
@@ -23,6 +24,24 @@ public:
     double getFrameDiffTime(AVFrame *avFrame);
 
     double getDelayTime(double diff);
+
+    int initFfmpegParams(int index, AVCodecParameters *codecParam, AVRational *timebase);
+ private:
+    JtPlaystatus *_pPlaystatus;
+    JtJniCallbackJava *_pCallback;
+    JtAudio *_pAudioObj;
+    JtQueue *_pVideoQueue;
+
+    //ffmpeg
+    AVCodecContext *_pCodecContext;
+    AVCodecParameters *_pCodecParam;
+
+    int _FfmpegStreamIndex;
+    AVCodecParameters *_FfmpegCodecParam;
+    AVRational _FfmpegTimebase;
+
+
+
 };
 
 

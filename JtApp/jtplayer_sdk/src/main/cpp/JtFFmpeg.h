@@ -21,19 +21,20 @@ extern "C"
 };
 
 
-typedef struct {
-    AVFormatContext *pFormatCtx = NULL;
-    JtAudio *audio = NULL;
-    JtVideo *video = NULL;
-    int duration = 0;
-}FFmpegStatus;
-
 
 class JtFFmpeg {
 
 public:
+
+	typedef struct {
+	    AVFormatContext *pFormatCtx = NULL;
+	    JtAudio *audio = NULL;
+	    JtVideo *video = NULL;
+	    int duration = 0;
+	}FFmpegStatus;
+
     JtFFmpeg(JtPlaystatus *playstatus, JtJniCallbackJava *callJava, const char *url);
-    ~WlFFmpeg();
+    ~JtFFmpeg();
 
     void parpared();
 

@@ -9,6 +9,7 @@ JtFFmpeg::JtFFmpeg(JtPlaystatus *playstatus, JtJniCallbackJava *callJava, const 
     this->pPlayStatus = playstatus;
     this->pJniCallbackJava = callJava;
     this->url = url;
+    this->decodeThread = 0;
     exit = false;
     pthread_mutex_init(&init_mutex, NULL);
     pthread_mutex_init(&seek_mutex, NULL);
@@ -167,10 +168,8 @@ void JtFFmpeg::decodeFFmpegThread() {
         {
             if(stFFmpegStatus.video == NULL)
             {
-                stFFmpegStatus.video = new JtVideo(pPlayStatus, pJniCallbackJava);
-                stFFmpegStatus.video->streamIndex = i;
-                stFFmpegStatus.video->codecpar = stFFmpegStatus.pFormatCtx->streams[i]->codecpar;
-                stFFmpegStatus.video->time_base = stFFmpegStatus.pFormatCtx->streams[i]->time_base;
+                stFFmpegStatus.video = new JtVideo(pPlayStatus, pJniCallbackJava, stFFmpegStatus.audio);
+                stFFmpegStatus.video->initFfmpegParams(i, stFFmpegStatus.pFormatCtx->streams[i]->codecpar, stFFmpegStatus.pFormatCtx->streams[i]->time_base);
 
                 int num = stFFmpegStatus.pFormatCtx->streams[i]->avg_frame_rate.num;
                 int den = stFFmpegStatus.pFormatCtx->streams[i]->avg_frame_rate.den;

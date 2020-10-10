@@ -3,3 +3,47 @@
 //
 
 #include "JtVideo.h"
+
+JtVideo::JtVideo(JtPlaystatus *playstatus, JtJniCallbackJava *jtCallJava, JtAudio* jtAudio) {
+    _pPlaystatus = playstatus;
+    _pCallback = jtCallJava;
+    _pAudioObj = jtAudio;
+    if(NULL == _pVideoQueue) {
+        _pVideoQueue = new JtQueue(_pPlaystatus);
+    }
+
+}
+
+
+JtVideo::~JtVideo() {
+	if(_pVideoQueue) {
+		delete _pVideoQueue;
+	}
+}
+
+
+int JtVideo::initFfmpegParams(int index, AVCodecParameters *codecParam, AVRational *timebase) {
+    _FfmpegStreamIndex = index;
+    _FfmpegCodecParam = codecParam;
+    _FfmpegTimebase = timebase;
+}
+
+
+void JtVideo::play() {
+
+}
+
+
+void JtVideo::release() {
+
+}
+
+
+double JtVideo::getFrameDiffTime(AVFrame *avFrame) {
+
+}
+
+
+double JtVideo::getDelayTime(double diff) {
+
+}
