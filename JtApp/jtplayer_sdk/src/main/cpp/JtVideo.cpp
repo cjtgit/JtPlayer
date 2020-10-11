@@ -28,8 +28,15 @@ int JtVideo::initFfmpegParams(int index, AVCodecParameters *codecParam, AVRation
     _FfmpegTimebase = timebase;
 }
 
+int JtVideo::pushVideoAvPacket(AVPacket *&avpacket) {
+    if(NULL != _pVideoQueue && NULL != avpacket) {
+        return _pVideoQueue->pushAvPacket(avpacket);
+    }
+    return -1;
+}
 
 void JtVideo::play() {
+
 
 }
 

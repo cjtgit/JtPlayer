@@ -30,11 +30,11 @@ public:
     void stop();
 
     void release();
-
+    JtQueue *_pJtQueue;
 private:
     JtPlaystatus *_pPlayState;
     JtJniCallbackJava *_pCallback;
-    JtQueue *_pJtQueue;
+
     int _sampleRate;
     pthread_mutex_t _codecMutex;
     uint8_t _pJtFramBuf;

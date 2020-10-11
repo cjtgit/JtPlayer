@@ -6,10 +6,10 @@
 #define JTAPP_JTQUEUE_H
 
 extern "C"{
-#include <libavutil/imgutils.h>
-#include <libavutil/samplefmt.h>
-#include <libavutil/timestamp.h>
-#include <libavformat/avformat.h>
+#include <include/libavutil/imgutils.h>
+#include <include/libavutil/samplefmt.h>
+#include <include/libavutil/timestamp.h>
+#include <include/libavformat/avformat.h>
 }
 #include "pthread.h"
 #include "JtPlaystatus.h"

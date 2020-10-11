@@ -26,6 +26,9 @@ class JtVideo {
     double getDelayTime(double diff);
 
     int initFfmpegParams(int index, AVCodecParameters *codecParam, AVRational *timebase);
+
+    int pushVideoAvPacket(AVPacket *&avpacket);
+
  private:
     JtPlaystatus *_pPlaystatus;
     JtJniCallbackJava *_pCallback;

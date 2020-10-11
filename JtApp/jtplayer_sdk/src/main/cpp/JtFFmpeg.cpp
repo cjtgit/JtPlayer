@@ -45,21 +45,21 @@ void JtFFmpeg::start() {
             continue;
         }
 
-        if(stFFmpegStatus.audio->queue->getQueueSize() > 40)
+        if(stFFmpegStatus.audio->_pJtQueue->getQueueSize() > 40)
         {
             av_usleep(1000 * 100);
             continue;
         }
         AVPacket *avPacket = av_packet_alloc();
-        if(av_read_frame(pFormatCtx, avPacket) == 0)
+        if(av_read_frame(stFFmpegStatus.pFormatCtx, avPacket) == 0)
         {
-            if(avPacket->stream_index == audio->streamIndex)
+            if(avPacket->stream_index == stFFmpegStatus.audio->streamIndex)
             {
-                audio->queue->putAvpacket(avPacket);
+                stFFmpegStatus.audio->_pJtQueue->putAvpacket(avPacket);
             }
-            else if(avPacket->stream_index == video->streamIndex)
+            else if(avPacket->stream_index == stFFmpegStatus.video->streamIndex)
             {
-                video->queue->putAvpacket(avPacket);
+                stFFmpegStatus.video->pushVideoAvPacket(avPacket);
             }
             else{
                 av_packet_free(&avPacket);
@@ -68,9 +68,9 @@ void JtFFmpeg::start() {
         } else{
             av_packet_free(&avPacket);
             av_free(avPacket);
-            while(playstatus != NULL && !playstatus->exit)
+            while(pPlayStatus != NULL && !pPlayStatus->exit)
             {
-                if(audio->queue->getQueueSize() > 0)
+                if(stFFmpegStatus.audio->queue->getQueueSize() > 0)
                 {
                     av_usleep(1000 * 100);
                     continue;
